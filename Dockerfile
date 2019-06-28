@@ -1,6 +1,6 @@
 FROM debian:9
 
-MAINTAINER jlh "jiluohao@yixin.im"
+MAINTAINER jlh "472327024@qq.com"
 
 COPY mysql-wsrep-5.6 /opt/mysql-wsrep-5.6
 COPY galera-3.x /opt/galera-3.x
