@@ -1,0 +1,40 @@
+#
+# The purpose of this test is to preserve the current state of the following:
+# * SHOW VARIABLES LIKE 'wsrep%'
+# * wsrep_provider_options
+# * The names of the Galera status variables
+#
+# This way, if there is any change, inadvertent or not, the test will fail and the
+# developer and QA will be alerted.
+#
+
+--source include/galera_cluster.inc
+--source include/have_innodb.inc
+
+# Global Variables
+
+SELECT VARIABLE_NAME, VARIABLE_VALUE
+FROM INFORMATION_SCHEMA.GLOBAL_VARIABLES
+WHERE VARIABLE_NAME LIKE 'wsrep_%'
+AND VARIABLE_NAME NOT IN (
+	'WSREP_PROVIDER_OPTIONS',
+	'WSREP_SST_RECEIVE_ADDRESS',
+	'WSREP_NODE_ADDRESS',
+	'WSREP_NODE_NAME',
+	'WSREP_PROVIDER',
+	'WSREP_DATA_HOME_DIR',
+	'WSREP_NODE_INCOMING_ADDRESS',
+	'WSREP_START_POSITION'
+)
+ORDER BY VARIABLE_NAME;
+
+# Global Status
+
+SELECT COUNT(*) FROM INFORMATION_SCHEMA.GLOBAL_STATUS
+WHERE VARIABLE_NAME LIKE 'wsrep_%'
+AND VARIABLE_NAME != 'wsrep_debug_sync_waiters';
+
+SELECT VARIABLE_NAME FROM INFORMATION_SCHEMA.GLOBAL_STATUS
+WHERE VARIABLE_NAME LIKE 'wsrep_%'
+AND VARIABLE_NAME != 'wsrep_debug_sync_waiters'
+ORDER BY VARIABLE_NAME;
