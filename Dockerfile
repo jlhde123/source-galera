@@ -1,6 +1,6 @@
 FROM debian:9
 
-MAINTAINER jlh "jiluohao@yixin.im"
+MAINTAINER jlh "472327024@qq.com"
 
 COPY galera.zip /opt/galera.zip
 COPY sources.list /etc/apt/sources.list
