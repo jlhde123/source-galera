@@ -1,9 +1,0 @@
-!include ../galera_2nodes.cnf
-
-[mysqld.1]
-log-bin=log1
-
-[mysqld.2]
-log-bin=log2
-
-
