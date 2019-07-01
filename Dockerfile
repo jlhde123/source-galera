@@ -1,14 +1,14 @@
 FROM debian:9
 
-MAINTAINER jlh "472327024@qq.com"
+MAINTAINER jlh "jiluohao@yixin.im"
 
-COPY mysql-wsrep-5.6 /opt/mysql-wsrep-5.6
-COPY galera-3.x /opt/galera-3.x
+COPY galera.zip /opt/galera.zip
 COPY sources.list /etc/apt/sources.list
 
 RUN apt-get update && apt-get build-dep -y  mysql-server \
 	&& apt-get install -y vim cmake bison \
-	libncurses5-dev libasio-dev check scons libboost-program-options-dev libboost-dev  libssl-dev scons lsof rsync \
+	libncurses5-dev libasio-dev check scons libboost-program-options-dev libboost-dev  libssl-dev scons lsof rsync unzip \
+	&& cd /opt && unzip galera.zip \
 	&& cd /opt/mysql-wsrep-5.6 && cmake -DWITH_WSREP=ON -DWITH_INNODB_DISALLOW_WRITES=ON ./ && make &&  make install \
 	&& cd /opt/galera-3.x && scons \
 	&& cp /opt/galera-3.x/libgalera_smm.so /usr/lib/ \
